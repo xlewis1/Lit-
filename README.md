@@ -40,3 +40,18 @@ Bash
 
 # 💡 The Future
 lit is more than a utility—it's an experiment in rewriting the foundational tools of software engineering from scratch.
+## Command Reference
+
+| Command | Description |
+| :--- | :--- |
+| `./lit start` | Initialize an empty .lit repository workspace |
+| `./lit status` | Show working tree status and untracked files |
+| `./lit save <msg>` | Save a snapshot of your files with a custom message |
+| `./lit history` | Display the commit history tree with timestamps |
+| `./lit ignite` | Pull and fast-forward updates from a remote/peer |
+| `./lit push <ip>` | Push your local commits and objects over network socket |
+| `./lit branch` | Manage or switch active project branches |
+| `./lit dilute` | Clean or dilute working directory cache |
+| `./lit nuke` | Nuke or delete repository objects/workspace |
+| `./lit dalek` | EXTERMINATE sensitive files (.env, keys, tokens) from workspace |
+| `./lit help` | Print the help screen and logo |
