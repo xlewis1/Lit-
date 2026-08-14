@@ -61,3 +61,4 @@ lit is more than a utility—it's an experiment in rewriting the foundational to
 | `./lit nuke` | Nuke or delete repository objects/workspace |
 | `./lit dalek` | EXTERMINATE sensitive files (.env, keys, tokens) from workspace |
 | `./lit help` | Print the help screen and logo |
+| `./lit grep` | Searches patterns of text in your .lit repository |
