@@ -1,4 +1,4 @@
-🔥 Lit (lit)
+##🔥 Lit (lit)
 The custom version control system built from the metal up.
 
 lit is a lightweight, blazing-fast version control system built completely from scratch in C. Instead of relying on existing frameworks, lit implements its own object-hashing database (.lit/objects), branch management, state engines, and custom system architecture.
