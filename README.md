@@ -41,6 +41,7 @@ Bash
 | ./lit nuke | Nuke or delete repository objects/workspace |
 | ./lit dalek | EXTERMINATE sensitive files (.env, keys, tokens) from workspace |
 | ./lit help | Print the help screen and logo |
+| ./lit grep | searches and prints text of code in your .lit directory.|
 
 
 # 💡 The Future
