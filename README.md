@@ -12,6 +12,11 @@ Unlike Git, which relies on complex packfiles and heavy abstraction layers, lit 
 Local Object Database (.lit/objects/): Every snapshot is hashed, compressed, and stored safely locally.
 Custom Engine (engine.c): Manages project states, networking, and metadata tracking directly from the command line.
 
+# features
+. .litignore (hides files you don't want inside your lit repositories)
+. its own .lit repositories (saves every committed file inside .lit directory)
+. protects your code (Lit's main job is to protect your code from bug fixes)
+
 # 🚀 Getting Started
 1. Initialize a Repository
 Start tracking your code natively with lit:
