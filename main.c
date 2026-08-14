@@ -14,21 +14,19 @@ void cmd_dilute(int argc, char *argv[]);
 void cmd_dalek(int argc, char *argv[]);
 void cmd_nuke(int argc, char *argv[]);
 void cmd_help(int argc, char *argv[]);
+void cmd_grep(int argc, char *argv[]); // Declared here, implemented in grep.c or below
 int parse_flags(int argc, char *argv[]);
 
 int main(int argc, char *argv[]) {
-    // If no arguments or help requested, print the logo and command manual
     if (argc < 2 || strcmp(argv[1], "help") == 0 || strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-h") == 0) {
         cmd_help(0, NULL);
         return 0;
     }
 
-    // Check if the user passed modifier flags (e.g., --remote or --ignore)
     if (parse_flags(argc - 1, &argv[1]) > 0) {
-        return 0; // Flags successfully handled and processed
+        return 0;
     }
 
-    // Route command arguments to their respective implementation modules
     const char *command = argv[1];
     int sub_argc = argc - 2;
     char **sub_argv = &argv[2];
@@ -56,6 +54,9 @@ int main(int argc, char *argv[]) {
     } 
     else if (strcmp(command, "checkout") == 0) {
         cmd_checkout(sub_argc, sub_argv);
+    } 
+    else if (strcmp(command, "grep") == 0) {
+        cmd_grep(sub_argc, sub_argv);
     } 
     else if (strcmp(command, "dilute") == 0) {
         cmd_dilute(sub_argc, sub_argv);
