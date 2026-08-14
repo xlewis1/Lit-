@@ -15,11 +15,38 @@ int engine_write_object(const char *content, size_t len, char *out_hash_hex);
 int engine_get_head(char *buf, size_t max_len);
 int engine_update_ref(const char *ref_name, const char *commit_hash);
 
+// Dynamic .litignore rule checker engine
 int should_ignore_save(const char *name) {
+    // Always ignore standard directory navigation and internal vcs folders
     if (strcmp(name, ".") == 0 || strcmp(name, "..") == 0) return 1;
     if (strcmp(name, ".lit") == 0) return 1;
-    if (strcmp(name, ".ccm") == 0) return 1;
-    if (strstr(name, ".o") != NULL) return 1;
+    if (strcmp(name, ".DS_Store") == 0) return 1;
+
+    // Open and read .litignore dynamically if it exists in the workspace
+    FILE *f = fopen(".litignore", "r");
+    if (f != NULL) {
+        char line[256];
+        while (fgets(line, sizeof(line), f) != NULL) {
+            // Strip trailing newlines or carriage returns
+            line[strcspn(line, "\r\n")] = 0;
+            
+            // Skip empty lines and comment lines starting with '#'
+            if (strlen(line) > 0 && line[0] != '#') {
+                // Exact match check
+                if (strcmp(name, line) == 0) {
+                    fclose(f);
+                    return 1;
+                }
+                // Optional extension wildcard match (e.g., matching *.o or similar patterns if needed)
+                if (line[0] == '*' && strstr(name, line + 1) != NULL) {
+                    fclose(f);
+                    return 1;
+                }
+            }
+        }
+        fclose(f);
+    }
+
     return 0;
 }
 
