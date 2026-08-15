@@ -1,2 +1,5 @@
 .lit/
 .DS_Store
+lit
+project.ccmake
+.litignore
