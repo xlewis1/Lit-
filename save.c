@@ -7,7 +7,7 @@
 #include <time.h>
 
 #define MAX_PATH 1024
-#define MAX_CONTENT (1024 * 1024) // 1MB max file size for simplicity
+#define MAX_CONTENT (1024 * 1024)
 
 // Forward declarations from engine.c
 int engine_is_initialized(void);
@@ -15,29 +15,21 @@ int engine_write_object(const char *content, size_t len, char *out_hash_hex);
 int engine_get_head(char *buf, size_t max_len);
 int engine_update_ref(const char *ref_name, const char *commit_hash);
 
-// Dynamic .litignore rule checker engine
 int should_ignore_save(const char *name) {
-    // Always ignore standard directory navigation and internal vcs folders
     if (strcmp(name, ".") == 0 || strcmp(name, "..") == 0) return 1;
     if (strcmp(name, ".lit") == 0) return 1;
     if (strcmp(name, ".DS_Store") == 0) return 1;
 
-    // Open and read .litignore dynamically if it exists in the workspace
     FILE *f = fopen(".litignore", "r");
     if (f != NULL) {
         char line[256];
         while (fgets(line, sizeof(line), f) != NULL) {
-            // Strip trailing newlines or carriage returns
             line[strcspn(line, "\r\n")] = 0;
-            
-            // Skip empty lines and comment lines starting with '#'
             if (strlen(line) > 0 && line[0] != '#') {
-                // Exact match check
                 if (strcmp(name, line) == 0) {
                     fclose(f);
                     return 1;
                 }
-                // Optional extension wildcard match (e.g., matching *.o or similar patterns if needed)
                 if (line[0] == '*' && strstr(name, line + 1) != NULL) {
                     fclose(f);
                     return 1;
@@ -46,11 +38,9 @@ int should_ignore_save(const char *name) {
         }
         fclose(f);
     }
-
     return 0;
 }
 
-// Helper to read an entire file into memory
 char *read_file_to_string(const char *path, size_t *out_len) {
     FILE *f = fopen(path, "rb");
     if (!f) return NULL;
@@ -78,7 +68,6 @@ char *read_file_to_string(const char *path, size_t *out_len) {
     return buf;
 }
 
-// Recursive helper to save files into object storage and build manifest
 void save_directory_recursive(const char *dir_path, FILE *commit_file, int *saved_count) {
     DIR *dir = opendir(dir_path);
     if (!dir) return;
@@ -100,7 +89,6 @@ void save_directory_recursive(const char *dir_path, FILE *commit_file, int *save
                 if (file_data) {
                     char obj_hash[65];
                     if (engine_write_object(file_data, file_len, obj_hash) == 0) {
-                        // Write mapping: relative_path -> object_hash to the commit file
                         fprintf(commit_file, "file %s %s\n", full_path + 2, obj_hash);
                         printf("  📦 Saved: %s\n", full_path + 2);
                         (*saved_count)++;
@@ -119,13 +107,11 @@ void cmd_save(int argc, char *argv[]) {
         return;
     }
 
-    // Get optional commit message from arguments
     const char *message = "Automatic save snapshot";
     if (argc > 0 && argv[0] != NULL) {
         message = argv[0];
     }
 
-    // Create a temporary buffer/file for the commit manifest content
     char manifest_path[MAX_PATH];
     snprintf(manifest_path, sizeof(manifest_path), ".lit/objects/temp_commit_%ld", (long)time(NULL));
     
@@ -135,7 +121,6 @@ void cmd_save(int argc, char *argv[]) {
         return;
     }
 
-    // Write metadata header
     time_t now = time(NULL);
     fprintf(commit_f, "timestamp %ld\n", (long)now);
     fprintf(commit_f, "message %s\n", message);
@@ -151,17 +136,15 @@ void cmd_save(int argc, char *argv[]) {
         return;
     }
 
-    // Read the completed manifest back to hash it as an object commit blob
     size_t manifest_len = 0;
     char *manifest_data = read_file_to_string(manifest_path, &manifest_len);
-    unlink(manifest_path); // remove temporary staging file
+    unlink(manifest_path);
 
     if (manifest_data) {
         char commit_hash[65];
         engine_write_object(manifest_data, manifest_len, commit_hash);
         free(manifest_data);
 
-        // Update current branch reference pointer to point to this new commit hash
         char head_ref[256];
         if (engine_get_head(head_ref, sizeof(head_ref)) == 0) {
             engine_update_ref(head_ref, commit_hash);
