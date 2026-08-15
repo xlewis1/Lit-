@@ -29,21 +29,6 @@ Commit your current progress into the local object database:
 Bash
 ./lit save "Implemented core tracking engine"
 
-# Command Reference
-| ./lit start | Initialize an empty .lit repository workspace |
-| ./lit status | Show working tree status and untracked files |
-| ./lit save <msg> | Save a snapshot of your files with a custom message |
-| ./lit history | Display the commit history tree with timestamps |
-| ./lit ignite | Pull and fast-forward updates from a remote/peer |
-| ./lit push <ip> | Push your local commits and objects over network socket |
-| ./lit branch | Manage or switch active project branches |
-| ./lit dilute | Clean or dilute working directory cache |
-| ./lit nuke | Nuke or delete repository objects/workspace |
-| ./lit dalek | EXTERMINATE sensitive files (.env, keys, tokens) from workspace |
-| ./lit help | Print the help screen and logo |
-| ./lit grep | searches and prints text of code in your .lit directory.|
-
-
 # 💡 The Future
 lit is more than a utility—it's an experiment in rewriting the foundational tools of software engineering from scratch.
 ## Command Reference
@@ -63,3 +48,5 @@ lit is more than a utility—it's an experiment in rewriting the foundational to
 | `./lit help` | Print the help screen and logo |
 | `./lit grep` | Searches patterns of text in your .lit repository |
 | `./lit cat`  | Prints text of the repository blobs from a specific hash |
+| `./lit stash`| creates a temporary shelve for uncommitted changes |
+| `./lit reverse` | resets or reverses active HEAD pointer to a targeted commit |
