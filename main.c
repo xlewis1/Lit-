@@ -14,8 +14,11 @@ void cmd_dilute(int argc, char *argv[]);
 void cmd_dalek(int argc, char *argv[]);
 void cmd_nuke(int argc, char *argv[]);
 void cmd_help(int argc, char *argv[]);
-void cmd_grep(int argc, char *argv[]); // Declared here, implemented in grep.c or below
+void cmd_grep(int argc, char *argv[]); 
 int parse_flags(int argc, char *argv[]);
+void cmd_stash(int argc, char *argv[]);
+void cmd_cat(int argc, char *argv[]);
+void cmd_reverse(int argc, char *argv[]);
 
 int main(int argc, char *argv[]) {
     if (argc < 2 || strcmp(argv[1], "help") == 0 || strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-h") == 0) {
@@ -67,6 +70,15 @@ int main(int argc, char *argv[]) {
     else if (strcmp(command, "nuke") == 0) {
         cmd_nuke(sub_argc, sub_argv);
     } 
+    else if (strcmp(command, "stash") == 0) {
+        cmd_stash(sub_argc, sub_argv);
+    }
+    else if (strcmp(command, "cat") == 0) {
+        cmd_cat(sub_argc, sub_argv);
+    }
+    else if (strcmp(command, "reverse") == 0) {
+        cmd_reverse(sub_argc, sub_argv);
+    }
     else {
         printf("❌ Unknown command: '%s'\n", command);
         printf("💡 Run `lit help` to view all available commands and options.\n");

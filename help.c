@@ -18,7 +18,7 @@ void cmd_help(int argc, char *argv[]) {
     printf("  ██║     ██║   ██║   \n");
     printf("  ███████╗██║   ██║   \n");
     printf("  ╚══════╝╚═╝   ╚═╝   \n");
-    printf("🔥 The High-Performance Native Git Tool\n");
+    printf("🔥 The High-Performance Custom Version Control Engine\n");
     printf(COLOR_RESET);
 
     printf(COLOR_CYAN "--------------------------------------------------\n" COLOR_RESET);
@@ -32,8 +32,11 @@ void cmd_help(int argc, char *argv[]) {
     printf("  %-12s - Pull and fast-forward updates from a remote/peer\n", "ignite");
     printf("  %-12s - Push your local commits and objects over network socket\n", "push <ip>");
     printf("  %-12s - Manage or switch active project branches\n", "branch");
+    printf("  %-12s - Reverse or reset active HEAD pointer to a target commit\n", "reverse <hash>");
     printf("  %-12s - Clean or dilute working directory cache\n", "dilute");
     printf("  %-12s - Nuke or delete repository objects/workspace\n", "nuke");
+    printf("  %-12s - Temporarily shelve uncommitted workspace changes\n", "stash");
+    printf("  %-12s - Exterminates private or dangerous files from the repository\n", "dalek");
     printf("  %-12s - Print this help screen and logo\n", "help");
     printf(COLOR_CYAN "--------------------------------------------------\n" COLOR_RESET);
 }
